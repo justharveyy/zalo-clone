@@ -14,7 +14,7 @@ export async function POST(req) {
         users.push({ ...doc.data(), id: doc.id });
     });
 
-    if (users.length === 0) {
+    if (results.empty) {
         return Response.json({
             success: false,
             message: 'User not found'
@@ -28,8 +28,14 @@ export async function POST(req) {
                     password: users[0].password
                 }, 'testkey' /* Replace with actual secret key */, {
                     expiresIn: '14d'
-                })
+                }),
+                userId: users[0].id
             })
-        }
+        } else {
+            return Response.json({
+                success: false,
+                message: 'Wrong username or password'
+            })
+        }   
     }
 }

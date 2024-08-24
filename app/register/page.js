@@ -2,21 +2,23 @@
 import Image from 'next/image';
 import { toast } from 'react-hot-toast';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, redirect } from 'next/navigation';
 
-export default function Login() {
+export default function Register() {
     const router = useRouter();
 
     // Check if user is already logged in
-    if (localStorage.getItem('token') !== undefined) {
-        router.push('/chat')
-    }
+    useEffect(() => {
+        if (localStorage.getItem('token') !== null) {
+            router.push('/chat')
+        }
+    }, [])
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [submitting, isSubmitting] = useState(false);
 
-    const loginHandler = async (e) => {
+    const registerHandler = async (e) => {
         isSubmitting(true);
         e.preventDefault();
         const res = await fetch(
@@ -70,7 +72,7 @@ export default function Login() {
                     <p className="text-center text-gray-500 font-semibold mb-5">Tạo tài khoản Zalo Clone của bạn để tiếp tục</p>
                     <div className="w-full bg-white h-fit">
                         <div className="p-10 shadow-lg">
-                            <form onSubmit={loginHandler}>
+                            <form onSubmit={registerHandler}>
                                 <div className="mb-5">
                                     <input type="text" disabled={submitting} value={username} onChange={(e) => { setUsername(e.target.value) }} className="w-full border border-b-1 border-l-0 border-t-0 border-r-0 text-sm ring-0 outline-0 pb-3" placeholder="Tên người dùng"/>
                                 </div>

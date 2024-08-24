@@ -8,9 +8,11 @@ export default function Login() {
     const router = useRouter();
 
     // Check if user is already logged in
-    if (localStorage.getItem('token') !== null) {
-        router.push('/chat')
-    }
+    useEffect(() => {
+        if (localStorage.getItem('token') !== null) {
+            router.push('/chat')
+        }
+    }, [])
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -37,6 +39,7 @@ export default function Login() {
             console.log(resResult);
             localStorage.setItem('token', resResult.token);
             localStorage.setItem('username', username);
+            localStorage.setItem('userId', resResult.userId)
             toast.success('Đăng nhập thành công. Đang điều hướng');
             router.push('/chat')
         } else {

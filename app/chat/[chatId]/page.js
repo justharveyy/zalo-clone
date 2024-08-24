@@ -34,6 +34,7 @@ export default function Chat({ params }) {
             chats: arrayUnion({
                 sender: localStorage.getItem('username'),
                 message: text,
+                date: new Date()
             })  
         })
         setText("");
@@ -68,17 +69,7 @@ export default function Chat({ params }) {
     return (
         <div className="w-full h-full flex">
             <div className="w-[300px] h-full border border-1 border-t-0 border-b-0 border-l-0 border-r-1 flex-none">
-                <div className="mt-5">
-                    {!chatsAvailable && ( <p>Tạo chat để tiếp tục</p> )}
-                    {chatsAvailable && chats.map((value, key) => (
-                        <div className="w-full h-fit hover:bg-gray-200 p-3" key={key} onClick={() => {router.push(`/chat/${value.id}`) }}>
-                            <p className="font-semibold">{value.chatTitle}</p>
-                            <p className="text-gray-500 font-semibold text-sm">
-                                {value.chats[0].sender}: {value.chats[0].message}
-                            </p>
-                        </div>
-                    ))}
-                </div>
+                
             </div>
             <div className="grow h-full flex flex-col">
                 <div className="w-full h-fit p-5 flex justify-between border border-1 border-t-0 border-l-0 border-r-0 border-b-1 flex-none">
@@ -101,11 +92,13 @@ export default function Chat({ params }) {
                     </div>
                 </div>
                 <div className="w-full grow bg-gray-200 p-5 overflow-y-scroll flex flex-col h-full" ref={chatRef}>
+                    <div></div>
                     {!chatsAvailable && <p>Đang tải chat</p>}
                     {chatsAvailable && currentChat.map((value, key) => (
                         <div className="p-3 rounded bg-white border border-1 border-[#365f97] w-fit mb-3" key={key}>
                             <p className="text-sm text-gray-400 font-semibold mb-2">{value.sender} đã gửi</p>
-                            {value.message}
+                            <p className="mb-2">{value.message}</p>
+                            <p className="text-sm text-gray-400 font-semibold mb-2">{new Date(value.date.seconds * 1000).toISOString()}</p>
                         </div>
                     ))}
                 </div>
