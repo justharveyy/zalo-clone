@@ -98,7 +98,7 @@ export default function Chat({ params }) {
                         <div className="p-3 rounded bg-white border border-1 border-[#365f97] w-fit mb-3" key={key}>
                             <p className="text-sm text-gray-400 font-semibold mb-2">{value.sender} đã gửi</p>
                             <p className="mb-2">{value.message}</p>
-                            <p className="text-sm text-gray-400 font-semibold mb-2">{new Date(value.date.seconds * 1000).toISOString()}</p>
+                            <p className="text-sm text-gray-400 font-semibold mb-2">{new Date(value.date.seconds * 1000).toLocaleTimeString()}</p>
                         </div>
                     ))}
                 </div>

@@ -16,6 +16,7 @@ export default function Register() {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [phone, setPhone] = useState("");
     const [submitting, isSubmitting] = useState(false);
 
     const registerHandler = async (e) => {
@@ -30,19 +31,19 @@ export default function Register() {
                 },
                 body: JSON.stringify({
                     username: username,
-                    password: password
+                    password: password,
+                    phone: phone
                 })
             }
         );
         const resResult = await res.json();
         if (resResult.success) {
-            console.log(resResult);
-            localStorage.setItem('token', username);
             toast.success('Đăng ký thành công. Đang điều hướng');
             router.push('/login')
         } else {
-            toast.error('Sai con mẹ mày rồi thử lại.');
+            toast.error('Sai rồi thử lại.');
             setUsername("");
+            setPhone("");
             setPassword("");
         }
     }
@@ -75,6 +76,9 @@ export default function Register() {
                             <form onSubmit={registerHandler}>
                                 <div className="mb-5">
                                     <input type="text" disabled={submitting} value={username} onChange={(e) => { setUsername(e.target.value) }} className="w-full border border-b-1 border-l-0 border-t-0 border-r-0 text-sm ring-0 outline-0 pb-3" placeholder="Tên người dùng"/>
+                                </div>
+                                <div className="mb-5">
+                                    <input type="text" disabled={submitting} value={phone} onChange={(e) => { setPhone(e.target.value) }} className="w-full border border-b-1 border-l-0 border-t-0 border-r-0 text-sm ring-0 outline-0 pb-3" placeholder="Số điện thoại"/>
                                 </div>
                                 <div className="mb-5">
                                     <input type="password" disabled={submitting} value={password} onChange={(e) => { setPassword(e.target.value) }} className="w-full border border-b-1 border-l-0 border-t-0 border-r-0 text-sm ring-0 outline-0 pb-3" placeholder="Mật khẩu"/>

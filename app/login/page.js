@@ -14,7 +14,7 @@ export default function Login() {
         }
     }, [])
 
-    const [username, setUsername] = useState("");
+    const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [submitting, isSubmitting] = useState(false);
 
@@ -29,7 +29,7 @@ export default function Login() {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    username: username,
+                    phone: phone,
                     password: password
                 })
             }
@@ -38,13 +38,14 @@ export default function Login() {
         if (resResult.success) {
             console.log(resResult);
             localStorage.setItem('token', resResult.token);
-            localStorage.setItem('username', username);
+            localStorage.setItem('username', resResult.username);
+            localStorage.setItem('phone', resResult.phone);
             localStorage.setItem('userId', resResult.userId)
             toast.success('Đăng nhập thành công. Đang điều hướng');
             router.push('/chat')
         } else {
-            toast.error('Sai con mẹ mày rồi thử lại.');
-            setUsername("");
+            toast.error('Sai rồi thử lại');
+            setPhone("");
             setPassword("");
             isSubmitting(false);
         }
@@ -77,7 +78,7 @@ export default function Login() {
                         <div className="p-10 shadow-lg">
                             <form onSubmit={loginHandler}>
                                 <div className="mb-5">
-                                    <input type="text" disabled={submitting} value={username} onChange={(e) => { setUsername(e.target.value) }} className="w-full border border-b-1 border-l-0 border-t-0 border-r-0 text-sm ring-0 outline-0 pb-3" placeholder="Tên người dùng"/>
+                                    <input type="text" disabled={submitting} value={phone} onChange={(e) => { setPhone(e.target.value) }} className="w-full border border-b-1 border-l-0 border-t-0 border-r-0 text-sm ring-0 outline-0 pb-3" placeholder="Số điện thoại"/>
                                 </div>
                                 <div className="mb-5">
                                     <input type="password" disabled={submitting} value={password} onChange={(e) => { setPassword(e.target.value) }} className="w-full border border-b-1 border-l-0 border-t-0 border-r-0 text-sm ring-0 outline-0 pb-3" placeholder="Mật khẩu"/>

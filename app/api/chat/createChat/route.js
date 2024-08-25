@@ -21,7 +21,7 @@ export async function POST(req) {
         console.log('Logging body...');
         console.log(body);
 
-        const q = query(collection(db, 'users'), where("username", "==", decoded.username));
+        const q = query(collection(db, 'users'), where("phone", "==", decoded.phone));
         const results = await getDocs(q);
         let users = [];
 

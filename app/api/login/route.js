@@ -5,7 +5,7 @@ import { sign, verify } from 'jsonwebtoken';
 
 export async function POST(req) {
     const body = await req.json();
-    const q = query(collection(db, 'users'), where("username", "==", body.username));
+    const q = query(collection(db, 'users'), where("phone", "==", body.phone));
     const results = await getDocs(q);
 
     // Get first results
@@ -24,12 +24,13 @@ export async function POST(req) {
             return Response.json({
                 success: true,
                 token: sign({   
-                    username: users[0].username,
+                    phone: users[0].phone,
                     password: users[0].password
                 }, 'testkey' /* Replace with actual secret key */, {
                     expiresIn: '14d'
                 }),
-                userId: users[0].id
+                userId: users[0].id,
+                username: users[0].username
             })
         } else {
             return Response.json({
